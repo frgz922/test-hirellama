@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <input type="text" class="order" onkeypress="validate(event)" />
+    <div class="message"></div>
+  </body>
+</html>
+
+<script>
+  let input = document.getElementsByClassName("order")[0];
+  let msg = document.getElementsByClassName("message")[0];
+
+  input.addEventListener("keyup", ({ key }) => {
+    let timeout = setTimeout(function () {
+      msg.innerText = "Auto-saving...";
+
+      setTimeout(function () {
+        msg.innerText = "Saved";
+      }, 1000);
+    }, 2000);
+
+    input.addEventListener("keydown", ({ key }) => {
+      clearTimeout(timeout);
+      msg.innerText = "";
+    });
+  });
+
+  function validate(evt) {
+    var theEvent = evt || window.event;
+
+    if (theEvent.type === "paste") {
+      key = event.clipboardData.getData("text/plain");
+    } else {
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]/;
+    if (!regex.test(key)) {
+      theEvent.returnValue = false;
+      if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+</script>
+
+<style></style>
